@@ -41,6 +41,9 @@ function Header(props) {
 				<Typography variant="h6" className={classes.title}>
 					Homepage
 				</Typography>
+				<Link to="/" className={classes.btn}>
+					<Button color="inherit">Home</Button>
+				</Link>
 				<Link to="/signin" className={classes.btn}>
 					<Button color="inherit">Login</Button>
 				</Link>
