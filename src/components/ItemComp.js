@@ -9,6 +9,7 @@ const styles = (theme) => ({
 		justifyContent: "center",
 		alignItems: "center",
 		textAlign: "center",
+		cursor: 'pointer',
 	},
 });
 
@@ -18,13 +19,13 @@ function ItemComp(props) {
 	var newColor = randomColor();
 	return (
 		<Grid
-			style={{ background: newColor }}
+			style={{ background: time ? newColor: '#fff' }}
 			item
 			xs={2}
 			className={classes.itemContainer}
 		>
-			<div>{time.data1}</div>
-			<div>{time.data2}</div>
+			<p>{time.data1}</p>
+			<p>{time.data2}</p>
 		</Grid>
 	);
 }

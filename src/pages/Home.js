@@ -8,6 +8,9 @@ import DataComp from "../components/DataComp";
 import datafromextfile from "./sampledata";
 import { CircularProgress } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
+import Button from '@material-ui/core/Button';
+import Calendar from '../components/calendar/Calendar';
+import { AiOutlinePlus } from 'react-icons/ai';
 
 const styles = (theme) => ({
 	root: {
@@ -15,7 +18,7 @@ const styles = (theme) => ({
 		width: "100%",
 		"& .container": {
 			width: "100%",
-			// border: "2px solid #000",
+			border: "1px solid #000",
 			"&:nth-child(1)": {
 				[theme.breakpoints.down("md")]: {
 					display: "none",
@@ -54,52 +57,22 @@ function Home(props) {
 		</>
 	);
 	return (
-		<React.Fragment>
+		<Container maxWidth="lg">
 			<CssBaseline />
-			<Container maxWidth="lg">
-				<Grid container spacing={2} className={classes.root} justify="center">
-					<Grid className="container" item md={3}></Grid>
-					<Grid className="container" item md={9}>
-						<Grid container spacing={2}>
-							<Grid Grid container item xs={12} justify="center">
-								<Grid item xs={1} style={{ background: "#fff" }}>
-									<Typography variant="body2" color="textSecondary">
-										{"Day"}
-									</Typography>
-								</Grid>
-								<Grid
-									container
-									item
-									xs={11}
-									spacing={(1, 0)}
-									style={{ background: "#a0a0a0", padding: "1em" }}
-								>
-									<Grid item xs={2}>
-										Early Morning
-									</Grid>
-									<Grid item xs={2}>
-										Morning
-									</Grid>
-									<Grid item xs={2}>
-										Afternoon
-									</Grid>
-									<Grid item xs={2}>
-										Evening
-									</Grid>
-									<Grid item xs={2}>
-										Night
-									</Grid>
-									<Grid item xs={2}>
-										Late Night
-									</Grid>
-								</Grid>
-							</Grid>
-							{dataMarkup}
-						</Grid>
+			<Grid container spacing={2} className={classes.root} justify="center">
+				<Grid className="container" item md={3}>
+					<Grid item xs={12}>
+						<Button startIcon={<AiOutlinePlus />} variant="contained" style={{ borderRadius: '1em', color: '#000' }}>Today</Button>
+					</Grid>
+					<Grid item xs={12}>
+						<Calendar side={true} />
 					</Grid>
 				</Grid>
-			</Container>
-		</React.Fragment>
+				<Grid className="container" item md={9}>
+					<Calendar side={false} />
+				</Grid>
+			</Grid>
+		</Container>
 	);
 }
 
