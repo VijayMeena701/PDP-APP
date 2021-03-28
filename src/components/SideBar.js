@@ -8,6 +8,7 @@ import SignIn from "../pages/SignIn";
 import SignUp from "../pages/Signup";
 import Error from "../pages/Error";
 import Home from "../pages/Home";
+import Profile from '../pages/Profile';
 import HomeIcon from '@material-ui/icons/Home';
 import PersonIcon from '@material-ui/icons/Person';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
@@ -167,6 +168,7 @@ function SideBar(props) {
                 <div className={classes.toolbarCont} />
                 <Switch>
                     <Route exact path="/" component={Home} />
+                    <Route exact path="/user" component={Profile} />
                     <Route exact path="/signin" component={SignIn} />
                     <Route exact path="/signup" component={SignUp} />
                     <Route exact path="*" component={Error} />
