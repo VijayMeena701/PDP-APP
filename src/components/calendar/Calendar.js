@@ -133,7 +133,8 @@ function Calendar(props) {
     const [value, setValue] = useState(moment());
     const [openPopup, setOpenPopup] = useState(false);
     const [title, setTitle] = useState('newTitle');
-    const [inputDay, setInputDay] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [cardData, setCardData] = useState({ date: '', time: '', title: '', description: '', type: '' });
 
     useEffect(() => {
         setCalendar(buildCalendar(value));
@@ -152,7 +153,20 @@ function Calendar(props) {
         setValue(day);
         setOpenPopup(true);
         setTitle(`Add Event for ${day.format("DD MMM")}`);
-        setInputDay(day.format("YYYY-MM-DD"));
+        setCardData({ ...cardData, date: day.format("YYYY-MM-DD"), time: `${dayStyles(day, value) === "today" ? moment().clone().format("HH:mm").toString() : '00:00'}` });
+    }
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const { date, time, title, description, type } = cardData;
+        const dataSet = {
+            date,
+            time,
+            title,
+            description,
+            type,
+        }
+        setLoading(true);
+        /// send the data from here and then setLoading back to false;
     }
 
     return (
@@ -191,13 +205,13 @@ function Calendar(props) {
                             {calendar.map((week, index) => <Grid container item justify="space-evenly" xs={12} key={index}>
                                 {week.map((day, index) => <Grid item xs key={index} onClick={() => handleClick(day)} className={classes.rightWeek}>
                                     <Paper elevation={3} variant="outlined" className="weekDays">
-                                        <Typograpy className={`${"weekDays", dayStyles(day, value)}`}>{isSingleDigit(day.format("MMM DD").toString()) ? `${'\u00A0'}${day.format("D").toString()}${'\u00A0'}` : day.format("MMM DD").toString()}</Typograpy>
+                                        <Typograpy className={`${"weekDays"} ${dayStyles(day, value)}`}>{isSingleDigit(day.format("MMM DD").toString()) ? `${'\u00A0'}${day.format("D").toString()}${'\u00A0'}` : day.format("MMM DD").toString()}</Typograpy>
                                     </Paper>
                                 </Grid>)}
                             </Grid>)}
                         </Grid>
                     </div>
-                    <Popup day={inputDay} title={title} openPopup={openPopup} setOpenPopup={setOpenPopup} />
+                    <Popup loading={loading} handleSubmit={handleSubmit} cardData={cardData} setCardData={setCardData} title={title} openPopup={openPopup} setOpenPopup={setOpenPopup} />
                 </div>
             )
             }

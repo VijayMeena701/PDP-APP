@@ -4,10 +4,10 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import Grid from "@material-ui/core/Grid";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
-import DataComp from "../components/DataComp";
+// import DataComp from "../components/DataComp";
 import datafromextfile from "./sampledata";
-import { CircularProgress } from "@material-ui/core";
-import Typography from "@material-ui/core/Typography";
+// import { CircularProgress } from "@material-ui/core";
+// import Typography from "@material-ui/core/Typography";
 import Button from '@material-ui/core/Button';
 import Calendar from '../components/calendar/Calendar';
 import { AiOutlinePlus } from 'react-icons/ai';
@@ -41,21 +41,21 @@ function Home(props) {
 		setLoading(true);
 		fetchData();
 	}, []);
-	let dataMarkup = loading ? (
-		<>
-			<Grid item xs={12}>
-				<CircularProgress />
-			</Grid>
-		</>
-	) : (
-		<>
-			{weeklyData &&
-				weeklyData.map((day, index) => {
-					const inputData = day;
-					return <DataComp inputData={inputData} key={index} />;
-				})}
-		</>
-	);
+	// let dataMarkup = loading ? (
+	// 	<>
+	// 		<Grid item xs={12}>
+	// 			<CircularProgress />
+	// 		</Grid>
+	// 	</>
+	// ) : (
+	// 	<>
+	// 		{weeklyData &&
+	// 			weeklyData.map((day, index) => {
+	// 				const inputData = day;
+	// 				return <DataComp inputData={inputData} key={index} />;
+	// 			})}
+	// 	</>
+	// );
 	return (
 		<Container maxWidth="lg">
 			<CssBaseline />
