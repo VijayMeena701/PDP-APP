@@ -157,14 +157,6 @@ function Calendar(props) {
     }
     const handleSubmit = (e) => {
         e.preventDefault();
-        const { date, time, title, description, type } = cardData;
-        const dataSet = {
-            date,
-            time,
-            title,
-            description,
-            type,
-        }
         setLoading(true);
         /// send the data from here and then setLoading back to false;
     }

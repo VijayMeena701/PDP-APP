@@ -15,6 +15,9 @@ import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Link from "@material-ui/core/Link";
+import { connect } from 'react-redux';
+import { signupUser } from '../redux/actions/userActions';
+import { CircularProgress } from "@material-ui/core";
 
 const styles = (theme) => ({
 	root: {
@@ -97,24 +100,41 @@ function Signup(props) {
 	const [firstName, setFirstName] = useState("");
 	const [lastName, setLastName] = useState("");
 	const [password, setPassword] = useState("");
-	const [error, setError] = useState(null);
+	// const [error, setError] = useState(null);
 	const [confirmPassword, setConfirmPassword] = useState("");
 	const [email, setEmail] = useState("");
+
+	// const passwordCheck = () => {
+	// 	if (password !== confirmPassword) {
+	// 		// setError("Password Did not match");
+	// 		setError(props.UI.errors);
+	// 	} else setError(null);
+	// };
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		passwordCheck();
-		let data = {
-			firstName,
-			lastName,
-			email,
-			password,
+		// passwordCheck();
+		const newUserData = {
+			email: email,
+			password: password,
+			firstName: firstName,
+			lastName: lastName,
+			confirmPassword: confirmPassword,
+			handle: firstName + lastName,
 		};
-		console.log(data);
-	};
-	const passwordCheck = () => {
-		if (password !== confirmPassword) {
-			setError("Password Did not match");
-		} else setError(null);
+		const history = props.history;
+		props.signupUser(newUserData, history);
+		// auth.createUserWithEmailAndPassword(newUserData.email, newUserData.password).then((userCredential) => {
+		// 	console.log(userCredential);
+		// 	if (userCredential && userCredential.additionalUserInfo.isNewUser == true) {
+		// 		userCredential.user.updateProfile({ displayName: firstName + lastName });
+		// 	}
+		// 	console.log(userCredential.user.displayName);
+		// 	setError(null);
+		// 	history.push('/');
+		// }).catch((err) => {
+		// 	console.log(err);
+		// })
+
 	};
 	return (
 		<Container component="main" maxWidth="lg">
@@ -152,7 +172,7 @@ function Signup(props) {
 						</div>
 					</div>
 					<div className={classes.formContainer}>
-						<form>
+						<form onSubmit={handleSubmit}>
 							<div className="rowContainer">
 								<TextField
 									InputProps={{ className: classes.input }}
@@ -194,7 +214,7 @@ function Signup(props) {
 								name="password"
 								required
 								color="primary"
-								helperText={error}
+								helperText={props.UI.errors}
 								onChange={(e) => setPassword(e.target.value)}
 							/>
 							<TextField
@@ -219,10 +239,10 @@ function Signup(props) {
 							/>
 							<Button
 								variant="contained"
-								onClick={handleSubmit}
+								type="submit"
 								color="secondary"
 							>
-								Create my Account
+								{!props.UI.loading ? 'Create my Account' : <CircularProgress />}
 							</Button>
 						</form>
 					</div>
@@ -237,6 +257,14 @@ function Signup(props) {
 
 Signup.propTypes = {
 	classes: PropTypes.object.isRequired,
+	user: PropTypes.object.isRequired,
+	signupUser: PropTypes.func.isRequired,
+	UI: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Signup);
+const mapStateToProps = (state) => ({
+	user: state.user,
+	UI: state.UI,
+})
+
+export default connect(mapStateToProps, { signupUser })(withStyles(styles)(Signup));

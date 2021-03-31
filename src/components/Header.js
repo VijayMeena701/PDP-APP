@@ -10,6 +10,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import { Link } from "react-router-dom";
 import SideBar from './SideBar';
 import clsx from 'clsx';
+import { connect } from 'react-redux';
 
 const styles = (theme) => ({
 	root: {
@@ -78,12 +79,16 @@ function Header(props) {
 					<Link to="/" className={classes.btn}>
 						<Button color="inherit">Home</Button>
 					</Link>
-					<Link to="/signin" className={classes.btn}>
-						<Button color="inherit">Login</Button>
-					</Link>
-					<Link to="/signup" className={classes.btn}>
-						<Button color="inherit">SignUp</Button>
-					</Link>
+					{!props.user.authenticated ?
+						<Link to="/signin" className={classes.btn}>
+							<Button color="inherit">Login</Button>
+						</Link> : null
+					}
+					{!props.user.authenticated ?
+						<Link to="/signup" className={classes.btn}>
+							<Button color="inherit">SignUp</Button>
+						</Link> : null
+					}
 				</Toolbar>
 			</AppBar>
 			<SideBar open={open} setOpen={setOpen} />
@@ -93,6 +98,11 @@ function Header(props) {
 
 Header.propTypes = {
 	classes: PropTypes.object.isRequired,
+	user: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(Header);
+const mapStateToProps = (state) => ({
+	user: state.user
+})
+
+export default connect(mapStateToProps, {})(withStyles(styles)(Header));

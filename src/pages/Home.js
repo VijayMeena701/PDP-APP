@@ -41,21 +41,6 @@ function Home(props) {
 		setLoading(true);
 		fetchData();
 	}, []);
-	// let dataMarkup = loading ? (
-	// 	<>
-	// 		<Grid item xs={12}>
-	// 			<CircularProgress />
-	// 		</Grid>
-	// 	</>
-	// ) : (
-	// 	<>
-	// 		{weeklyData &&
-	// 			weeklyData.map((day, index) => {
-	// 				const inputData = day;
-	// 				return <DataComp inputData={inputData} key={index} />;
-	// 			})}
-	// 	</>
-	// );
 	return (
 		<Container maxWidth="lg">
 			<CssBaseline />

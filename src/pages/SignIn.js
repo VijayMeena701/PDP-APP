@@ -11,6 +11,9 @@ import Container from "@material-ui/core/Container";
 import Box from "@material-ui/core/Box";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Link from "@material-ui/core/Link";
+import { connect } from 'react-redux';
+import { login } from '../redux/actions/userActions';
+import { CircularProgress } from "@material-ui/core";
 
 const styles = (theme) => ({
 	root: {
@@ -86,7 +89,7 @@ function SignIn(props) {
 			email: email,
 			password: password,
 		};
-		console.log(object);
+		props.login(object, props.history);
 	};
 	return (
 		<Container component="main" maxWidth="lg">
@@ -127,7 +130,7 @@ function SignIn(props) {
 								onChange={(e) => setPassword(e.target.value)}
 							/>
 							<Button type="submit" className={classes.submit}>
-								Login
+								{!props.UI.loading ? 'Login' : <CircularProgress />}
 							</Button>
 							<Grid container>
 								<Grid item xs>
@@ -154,6 +157,13 @@ function SignIn(props) {
 
 SignIn.propTypes = {
 	classes: PropTypes.object.isRequired,
+	user: PropTypes.object.isRequired,
+	UI: PropTypes.object.isRequired,
+	login: PropTypes.func.isRequired,
 };
+const mapStateToProps = (state) => ({
+	user: state.user,
+	UI: state.UI
+})
 
-export default withStyles(styles)(SignIn);
+export default connect(mapStateToProps, { login })(withStyles(styles)(SignIn));

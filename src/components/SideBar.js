@@ -15,6 +15,7 @@ import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import CardGiftcardIcon from '@material-ui/icons/CardGiftcard';
 import SettingsIcon from '@material-ui/icons/Settings';
 import { Route, Switch, withRouter } from "react-router-dom";
+import { connect } from 'react-redux';
 
 const drawerWidth = 240
 
@@ -179,7 +180,12 @@ function SideBar(props) {
 }
 
 SideBar.propTypes = {
-    classes: PropTypes.object.isRequired
+    classes: PropTypes.object.isRequired,
+    user: PropTypes.object.isRequired,
 }
 
-export default withRouter(withStyles(styles)(SideBar));
+const mapStateToProps = (state) => ({
+    user: state.user
+});
+
+export default connect(mapStateToProps, {})(withRouter(withStyles(styles)(SideBar)));
