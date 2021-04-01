@@ -30,7 +30,9 @@ const styles = (theme) => ({
 
 function Home(props) {
 	const classes = props.classes;
+	// eslint-disable-next-line
 	const [weeklyData, setWeeklyData] = useState(null);
+	// eslint-disable-next-line
 	const [loading, setLoading] = useState(true);
 	const fetchData = async () => {
 		const datalink = datafromextfile;

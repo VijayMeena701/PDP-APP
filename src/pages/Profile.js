@@ -9,6 +9,7 @@ import SwipeableViews from 'react-swipeable-views';
 import { FaMedal } from 'react-icons/fa';
 import { FcLineChart } from "react-icons/fc";
 import image from './utility/image 6.jpg';
+import { connect } from 'react-redux';
 
 const styles = (theme) => ({
     root: {
@@ -127,7 +128,7 @@ function FullWidthTabs(props) {
                                 <Typography variant="h5">{"Name"}</Typography>
                             </Grid>
                             <Grid item xs={9}>
-                                <Typography color="textSecondary" variant="h5">:&nbsp;{"Vijay Meena"}</Typography>
+                                <Typography color="textSecondary" variant="h5">:&nbsp;{props.user.credentials.firstName + " " + props.user.credentials.lastName}</Typography>
                             </Grid>
                         </Grid>
                         <Grid item container xs={12} >
@@ -135,7 +136,7 @@ function FullWidthTabs(props) {
                                 <Typography variant="body1">{"Job"}</Typography>
                             </Grid>
                             <Grid item xs={9}>
-                                <Typography color="textSecondary" variant="body1">:&nbsp;{"Computer Science Engineer"}</Typography>
+                                <Typography color="textSecondary" variant="body1">:&nbsp;{props.user.credentials.job}</Typography>
                             </Grid>
                         </Grid>
                         <Grid item container xs={12} >
@@ -143,7 +144,7 @@ function FullWidthTabs(props) {
                                 <Typography variant="body1">{"Hobby"}</Typography>
                             </Grid>
                             <Grid item xs={9}>
-                                <Typography color="textSecondary" variant="body1">:&nbsp;{"Tech Geek"}</Typography>
+                                <Typography color="textSecondary" variant="body1">:&nbsp;{props.user.credentials.hobby}</Typography>
                             </Grid>
                         </Grid>
                         <Grid item container xs={12} >
@@ -151,15 +152,15 @@ function FullWidthTabs(props) {
                                 <FcLineChart size={20} />
                             </Grid>
                             <Grid item xs={9}>
-                                <Typography color="textSecondary" variant="body1">:&nbsp;{"102485"}</Typography>
+                                <Typography color="textSecondary" variant="body1">:&nbsp;{props.user.credentials.globalRank}</Typography>
                             </Grid>
                         </Grid>
                         <Grid item container xs={12} >
                             <Grid item xs={3}>
-                                <FaMedal size={20} style={{ color: '#CD7F32' }} />
+                                <FaMedal size={20} style={{ color: props.user.credentials.rankColor }} />
                             </Grid>
                             <Grid item xs={9}>
-                                <Typography color="textSecondary" variant="body1">:&nbsp;{" BRONZE"}</Typography>
+                                <Typography color="textSecondary" variant="body1">:&nbsp;{props.user.credentials.rank}</Typography>
                             </Grid>
                         </Grid>
                     </Grid>
@@ -191,7 +192,7 @@ function Profile(props) {
                         <Grid item xs />
                         <Grid item xs>
                             <div className={classes.profilePicContainer}>
-                                <img src={image} alt={image} ></img>
+                                <img src={props.user.credentials.imageUrl} alt={image} ></img>
                             </div>
                         </Grid>
                         <Grid item xs />
@@ -199,7 +200,7 @@ function Profile(props) {
                     <Grid container justify="center" item xs={12} className={classes.profileContainer}>
                         {/* <Grid item xs />
                         <Grid item xs /> */}
-                        <FullWidthTabs userData={userData} classes={classes} />
+                        <FullWidthTabs user={props.user} userData={userData} classes={classes} />
                     </Grid>
                 </Grid>
                 <Grid item xs={12}></Grid>
@@ -211,6 +212,13 @@ function Profile(props) {
 Profile.propTypes = {
     classes: PropTypes.object.isRequired,
     userData: PropTypes.object.isRequired,
+    user: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles)(Profile);
+const mapStateToProps = (state) => ({
+    user: state.user,
+    UI: state.UI,
+    data: state.data,
+})
+
+export default connect(mapStateToProps, {})(withStyles(styles)(Profile));

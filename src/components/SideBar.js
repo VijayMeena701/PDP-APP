@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { useTheme, Drawer, IconButton, Divider, List, ListItem, ListItemText, ListItemIcon } from '@material-ui/core';
-import { ChevronRight as ChevronRightIcon, ChevronLeft as ChevronLeftIcon, Inbox as InboxIcon, Mail as MailIcon, } from '@material-ui/icons';
+import { ChevronRight as ChevronRightIcon, ChevronLeft as ChevronLeftIcon } from '@material-ui/icons';
 import clsx from 'clsx';
 import SignIn from "../pages/SignIn";
 import SignUp from "../pages/Signup";
@@ -16,6 +16,11 @@ import CardGiftcardIcon from '@material-ui/icons/CardGiftcard';
 import SettingsIcon from '@material-ui/icons/Settings';
 import { Route, Switch, withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
+import { logout } from '../redux/actions/userActions';
+import Settings from '../pages/Settings';
+import { FiLogIn } from 'react-icons/fi';
+import { GoSignIn } from 'react-icons/go';
+import { FaPowerOff } from 'react-icons/fa'
 
 const drawerWidth = 240
 
@@ -121,6 +126,11 @@ function SideBar(props) {
             text: 'Settings',
             icon: <SettingsIcon />,
             onClick: () => history.push('/settings'),
+        },
+        {
+            text: 'Logout',
+            icon: <FaPowerOff fontSize={'1.5em'} />,
+            onClick: () => props.logout(),
         }
     ]
     return (
@@ -145,17 +155,29 @@ function SideBar(props) {
                 </div>
                 <Divider />
                 <List>
-                    {itemList.map((item, index) => {
+                    {props.user.authenticated ? itemList.map((item, index) => {
                         const { text, icon, onClick } = item;
                         return (
-                            <ListItem button key={text} onClick={onClick}>
+                            <ListItem button key={index} onClick={onClick}>
                                 {icon && <ListItemIcon>{icon}</ListItemIcon>}
                                 <ListItemText primary={text} />
                             </ListItem>
                         )
-                    })}
+                    }) : (
+                        <>
+                            <ListItem button onClick={() => history.push('/signin')}>
+                                <ListItemIcon><FiLogIn fontSize={'1.5em'} /></ListItemIcon>
+                                <ListItemText primary="Login" />
+                            </ListItem>
+                            <ListItem button onClick={() => history.push('/signup')}>
+                                <ListItemIcon><GoSignIn fontSize={'1.5em'} /></ListItemIcon>
+                                <ListItemText primary="Signin" />
+                            </ListItem>
+                        </>
+
+                    )}
                 </List>
-                <Divider />
+                {/* <Divider />
                 <List>
                     {['All mail', 'Trash', 'Spam'].map((text, index) => (
                         <ListItem button key={text}>
@@ -163,13 +185,15 @@ function SideBar(props) {
                             <ListItemText primary={text} />
                         </ListItem>
                     ))}
-                </List>
+                </List> */}
             </Drawer>
             <main className={classes.content}>
                 <div className={classes.toolbarCont} />
                 <Switch>
                     <Route exact path="/" component={Home} />
                     <Route exact path="/user" component={Profile} />
+                    <Route exact path="/calendar" component={Home} />
+                    <Route exact path="/settings" component={Settings} />
                     <Route exact path="/signin" component={SignIn} />
                     <Route exact path="/signup" component={SignUp} />
                     <Route exact path="*" component={Error} />
@@ -182,10 +206,12 @@ function SideBar(props) {
 SideBar.propTypes = {
     classes: PropTypes.object.isRequired,
     user: PropTypes.object.isRequired,
+    logout: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => ({
-    user: state.user
+    user: state.user,
+    UI: state.UI,
 });
 
-export default connect(mapStateToProps, {})(withRouter(withStyles(styles)(SideBar)));
+export default connect(mapStateToProps, { logout })(withRouter(withStyles(styles)(SideBar)));

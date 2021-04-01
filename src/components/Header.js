@@ -11,6 +11,8 @@ import { Link } from "react-router-dom";
 import SideBar from './SideBar';
 import clsx from 'clsx';
 import { connect } from 'react-redux';
+import { logout } from '../redux/actions/userActions';
+import { CircularProgress } from "@material-ui/core";
 
 const styles = (theme) => ({
 	root: {
@@ -73,16 +75,18 @@ function Header(props) {
 					>
 						<MenuIcon />
 					</IconButton>
-					<Typography variant="h6" className={classes.title}>
-						Homepage
-				</Typography>
+					{
+						!props.UI.loading ? <Typography variant="h6" className={classes.title}>
+							{props.user.credentials && props.user.authenticated ? `${props.user.credentials.handle}` : "Homepage"}
+						</Typography> : <div className={classes.title}><CircularProgress color="secondary" /></div>
+					}
 					<Link to="/" className={classes.btn}>
 						<Button color="inherit">Home</Button>
 					</Link>
 					{!props.user.authenticated ?
 						<Link to="/signin" className={classes.btn}>
 							<Button color="inherit">Login</Button>
-						</Link> : null
+						</Link> : <Button color="inherit" onClick={() => props.logout()} >{"Logout"}</Button>
 					}
 					{!props.user.authenticated ?
 						<Link to="/signup" className={classes.btn}>
@@ -98,11 +102,13 @@ function Header(props) {
 
 Header.propTypes = {
 	classes: PropTypes.object.isRequired,
-	user: PropTypes.object.isRequired
+	user: PropTypes.object.isRequired,
+	UI: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
-	user: state.user
+	user: state.user,
+	UI: state.UI,
 })
 
-export default connect(mapStateToProps, {})(withStyles(styles)(Header));
+export default connect(mapStateToProps, { logout })(withStyles(styles)(Header));
