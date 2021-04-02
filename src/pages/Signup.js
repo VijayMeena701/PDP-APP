@@ -100,19 +100,17 @@ function Signup(props) {
 	const [firstName, setFirstName] = useState("");
 	const [lastName, setLastName] = useState("");
 	const [password, setPassword] = useState("");
-	// const [error, setError] = useState(null);
 	const [confirmPassword, setConfirmPassword] = useState("");
 	const [email, setEmail] = useState("");
-
-	// const passwordCheck = () => {
-	// 	if (password !== confirmPassword) {
-	// 		// setError("Password Did not match");
-	// 		setError(props.UI.errors);
-	// 	} else setError(null);
-	// };
+	const [checkState, setCheckState] = useState({
+		terms: false,
+		privacyPolicy: false,
+	});
+	const handleChange = (e) => {
+		setCheckState({ ...checkState, [e.target.name]: e.target.checked });
+	}
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		// passwordCheck();
 		const newUserData = {
 			email: email,
 			password: password,
@@ -123,17 +121,6 @@ function Signup(props) {
 		};
 		const history = props.history;
 		props.signupUser(newUserData, history);
-		// auth.createUserWithEmailAndPassword(newUserData.email, newUserData.password).then((userCredential) => {
-		// 	console.log(userCredential);
-		// 	if (userCredential && userCredential.additionalUserInfo.isNewUser == true) {
-		// 		userCredential.user.updateProfile({ displayName: firstName + lastName });
-		// 	}
-		// 	console.log(userCredential.user.displayName);
-		// 	setError(null);
-		// 	history.push('/');
-		// }).catch((err) => {
-		// 	console.log(err);
-		// })
 
 	};
 	return (
@@ -203,6 +190,8 @@ function Signup(props) {
 								label="Email"
 								name="email"
 								required
+								error={props.UI.errors ? props.UI.errors.message ? true : false : false}
+								helperText={props.UI.errors ? props.UI.errors.message : null}
 								color="primary"
 								onChange={(e) => setEmail(e.target.value)}
 							/>
@@ -215,6 +204,7 @@ function Signup(props) {
 								required
 								color="primary"
 								helperText={props.UI.errors}
+								error={props.UI.errors ? true : false}
 								onChange={(e) => setPassword(e.target.value)}
 							/>
 							<TextField
@@ -223,18 +213,21 @@ function Signup(props) {
 								type="password"
 								label="Confirm Password"
 								name="confirmPassword"
+								helperText={props.UI.errors}
+								error={props.UI.errors ? true : false}
 								required
 								color="primary"
 								onChange={(e) => setConfirmPassword(e.target.value)}
 							/>
 							<FormControlLabel
 								value="start"
-								control={<Checkbox color="primary" />}
+								control={<Checkbox required color="primary" name="terms" onChange={(e) => handleChange(e)} />}
 								label="I Agree to SuDoIt’s Terms and Conditions"
 							/>
 							<FormControlLabel
 								value="start"
-								control={<Checkbox color="primary" />}
+								error={props.UI.errors ? true : false}
+								control={<Checkbox required color="primary" name="privacyPolicy" onChange={(e) => handleChange(e)} />}
 								label="I accept to SuDoIt’s use of my data for the service and everything else described in Privacy Policy"
 							/>
 							<Button

@@ -12,7 +12,8 @@ import SideBar from './SideBar';
 import clsx from 'clsx';
 import { connect } from 'react-redux';
 import { logout } from '../redux/actions/userActions';
-import { CircularProgress } from "@material-ui/core";
+import { CircularProgress, Avatar } from "@material-ui/core";
+import moment from 'moment';
 
 const styles = (theme) => ({
 	root: {
@@ -77,7 +78,12 @@ function Header(props) {
 					</IconButton>
 					{
 						!props.UI.loading ? <Typography variant="h6" className={classes.title}>
-							{props.user.credentials && props.user.authenticated ? `${props.user.credentials.handle}` : "Homepage"}
+							{props.user.authenticated && props.user.credentials ? `${props.user.credentials.handle}` : "SUDOIT"}
+						</Typography> : <div className={classes.title}><CircularProgress color="secondary" /></div>
+					}
+					{
+						!props.UI.loading ? <Typography variant="h6" className={classes.title}>
+							{props.user.credentials && props.user.authenticated ? `${moment().clone().format("MMMM YYYY")}` : null}
 						</Typography> : <div className={classes.title}><CircularProgress color="secondary" /></div>
 					}
 					<Link to="/" className={classes.btn}>
@@ -86,7 +92,9 @@ function Header(props) {
 					{!props.user.authenticated ?
 						<Link to="/signin" className={classes.btn}>
 							<Button color="inherit">Login</Button>
-						</Link> : <Button color="inherit" onClick={() => props.logout()} >{"Logout"}</Button>
+						</Link> : <Button color="inherit" onClick={() => props.logout(props.history)} >{"Logout"}</Button>
+					}
+					{!props.user.authenticated ? null : <Button color="inherit" ><Avatar src={props.user.credentials.imageUrl} ></Avatar></Button>
 					}
 					{!props.user.authenticated ?
 						<Link to="/signup" className={classes.btn}>

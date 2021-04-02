@@ -69,12 +69,7 @@ function VerticalTabs(props) {
     // eslint-disable-next-line
     const [imgUrl, setImgUrl] = useState(props.user.credentials ? props.user.credentials.imageUrl : "");
 
-    const [userData, setUserData] = useState({
-        name: props.user.credentials ? props.user.credentials.name : "",
-        bio: props.user.credentials ? props.user.credentials.bio : "",
-        email: props.user.credentials ? props.user.credentials.email : "",
-        handle: props.user.credentials ? props.user.credentials.handle : ""
-    })
+    const [userData, setUserData] = useState(props.user.credentials ? { ...props.user.credentials } : null)
 
     const [currentTask, setCurrentTask] = useState('');
     // const [file, setFile] = useState(null);
@@ -174,6 +169,22 @@ function VerticalTabs(props) {
                                         </Grid>
                                         <Grid item xs={6}>
                                             <TextField fullWidth name="bio" value={userData.bio} onChange={(e) => setUserData({ ...userData, [e.target.name]: e.target.value })}></TextField>
+                                        </Grid>
+                                    </Grid>
+                                    <Grid container justify="space-evenly" item xs={12} style={{ justifyContent: 'center', alignItems: 'center', textAlign: 'center' }}>
+                                        <Grid item xs={2}>
+                                            <Typography variant="body1">Hobby</Typography>
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <TextField fullWidth name="hobby" value={userData.hobby} onChange={(e) => setUserData({ ...userData, [e.target.name]: e.target.value })}></TextField>
+                                        </Grid>
+                                    </Grid>
+                                    <Grid container justify="space-evenly" item xs={12} style={{ justifyContent: 'center', alignItems: 'center', textAlign: 'center' }}>
+                                        <Grid item xs={2}>
+                                            <Typography variant="body1">Job</Typography>
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <TextField fullWidth name="job" value={userData.job} onChange={(e) => setUserData({ ...userData, [e.target.name]: e.target.value })}></TextField>
                                         </Grid>
                                     </Grid>
                                     <Grid item xs={12}>

@@ -127,6 +127,8 @@ function SignIn(props) {
 								name="password"
 								required
 								color="primary"
+								helperText={props.UI.errors ? props.UI.errors.message : null}
+								error={props.UI.errors}
 								onChange={(e) => setPassword(e.target.value)}
 							/>
 							<Button type="submit" className={classes.submit}>

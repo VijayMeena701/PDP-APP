@@ -8,6 +8,7 @@ import SignIn from "../pages/SignIn";
 import SignUp from "../pages/Signup";
 import Error from "../pages/Error";
 import Home from "../pages/Home";
+import Today from '../pages/Today';
 import Profile from '../pages/Profile';
 import HomeIcon from '@material-ui/icons/Home';
 import PersonIcon from '@material-ui/icons/Person';
@@ -115,7 +116,7 @@ function SideBar(props) {
         {
             text: 'Calendar',
             icon: <CalendarTodayIcon />,
-            onClick: () => history.push('/calendar'),
+            onClick: () => history.push('/today'),
         },
         {
             text: 'Rewards',
@@ -192,7 +193,7 @@ function SideBar(props) {
                 <Switch>
                     <Route exact path="/" component={Home} />
                     <Route exact path="/user" component={Profile} />
-                    <Route exact path="/calendar" component={Home} />
+                    <Route exact path="/today" component={Today} />
                     <Route exact path="/settings" component={Settings} />
                     <Route exact path="/signin" component={SignIn} />
                     <Route exact path="/signup" component={SignUp} />

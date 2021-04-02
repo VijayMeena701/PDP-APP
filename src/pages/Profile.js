@@ -86,7 +86,6 @@ function a11yProps(index) {
 };
 
 function FullWidthTabs(props) {
-    // const { name, job, hobby, position, rank } = props.userData;
     console.log(props)
     const classes = props.classes;
     const theme = useTheme();
@@ -166,8 +165,49 @@ function FullWidthTabs(props) {
                     </Grid>
                 </TabPanel>
                 <TabPanel value={value} index={1} dir={theme.direction}>
-                    Item Two
-          </TabPanel>
+                    <Grid container item className={classes.profileData} style={{ marginTop: '1.5em' }} xs={12}>
+                        <Grid item container xs={12} >
+                            <Grid item xs={3}>
+                                <Typography variant="body1">{"Email"}</Typography>
+                            </Grid>
+                            <Grid item xs={9}>
+                                <Typography color="textSecondary" variant="body1">:&nbsp;{props.user.credentials.email}</Typography>
+                            </Grid>
+                        </Grid>
+                        <Grid item container xs={12} >
+                            <Grid item xs={3}>
+                                <Typography variant="body1">{"UserName"}</Typography>
+                            </Grid>
+                            <Grid item xs={9}>
+                                <Typography color="textSecondary" variant="body1">:&nbsp;{props.user.credentials.handle}</Typography>
+                            </Grid>
+                        </Grid>
+                        <Grid item container xs={12} >
+                            <Grid item xs={3}>
+                                <Typography variant="body1">{"Account"}</Typography>
+                            </Grid>
+                            <Grid item xs={9}>
+                                <Typography color="textSecondary" variant="body1">:&nbsp;Created on {props.user.credentials.createdAt}</Typography>
+                            </Grid>
+                        </Grid>
+                        <Grid item container xs={12} >
+                            <Grid item xs={3}>
+                                <Typography variant="body1">{"Bio"}</Typography>
+                            </Grid>
+                            <Grid item xs={9}>
+                                <Typography color="textSecondary" variant="body1">:&nbsp;{props.user.credentials.bio}</Typography>
+                            </Grid>
+                        </Grid>
+                        <Grid item container xs={12} >
+                            <Grid item xs={3}>
+                                <Typography variant="body1">{"UserId"}</Typography>
+                            </Grid>
+                            <Grid item xs={9}>
+                                <Typography color="textSecondary" variant="body1">:&nbsp;{props.user.credentials.userId} {`(Highly Confidential Info)`}</Typography>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </TabPanel>
                 <TabPanel value={value} index={2} dir={theme.direction}>
                     Item Three
           </TabPanel>
@@ -178,12 +218,10 @@ function FullWidthTabs(props) {
 
 FullWidthTabs.propTypes = {
     classes: PropTypes.object.isRequired,
-    userData: PropTypes.object.isRequired,
 }
 
 function Profile(props) {
     const classes = props.classes;
-    const userData = props.userData;
     return (
         <Container maxWidth="lg" className={classes.root}>
             <Grid container spacing={1} justify="center">
@@ -198,9 +236,7 @@ function Profile(props) {
                         <Grid item xs />
                     </Grid>
                     <Grid container justify="center" item xs={12} className={classes.profileContainer}>
-                        {/* <Grid item xs />
-                        <Grid item xs /> */}
-                        <FullWidthTabs user={props.user} userData={userData} classes={classes} />
+                        <FullWidthTabs style={{ width: '100%' }} user={props.user} classes={classes} />
                     </Grid>
                 </Grid>
                 <Grid item xs={12}></Grid>
@@ -211,7 +247,6 @@ function Profile(props) {
 
 Profile.propTypes = {
     classes: PropTypes.object.isRequired,
-    userData: PropTypes.object.isRequired,
     user: PropTypes.object.isRequired,
 }
 

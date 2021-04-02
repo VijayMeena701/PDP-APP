@@ -12,6 +12,8 @@ import Typograpy from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Popup from './Popup';
+import Typography from '@material-ui/core/Typography';
+import { connect } from 'react-redux';
 
 
 const styles = (theme) => ({
@@ -110,6 +112,9 @@ const styles = (theme) => ({
         },
         '& .weekDays': {
             width: '100%',
+        },
+        '& .weekDaysnew': {
+            width: '100%',
             height: '6em',
         }
     },
@@ -144,22 +149,24 @@ function Calendar(props) {
     const currMonthYear = () => value.format("YYYY");
     const prevMonth = () => value.clone().subtract(1, 'month');
     const nextMonth = () => value.clone().add(1, 'month');
+    const [isDay, setIsDay] = useState(null);
     const isSingleDigit = (val) => {
         if (/^\d$/.test(val)) return true;
         else return false;
     }
 
-    const handleClick = (day) => {
+    const handleClick = (day, index1, index2) => {
         setValue(day);
+        setIsDay(index1 * 7 + index2);
         setOpenPopup(true);
         setTitle(`Add Event for ${day.format("DD MMM")}`);
-        setCardData({ ...cardData, date: day.format("YYYY-MM-DD"), time: `${dayStyles(day, value) === "today" ? moment().clone().format("HH:mm").toString() : '00:00'}` });
+        setCardData({ ...cardData, date: day.format("YYYY-MM-DD"), time: `${dayStyles(day, value) === "today" ? moment().clone().format("HH:mm").toString() : '00:00'}`, index1: index1, index2: index2 });
     }
     const handleSubmit = (e) => {
         e.preventDefault();
         setLoading(true);
         /// send the data from here and then setLoading back to false;
-    }
+    };
 
     return (
         <>
@@ -194,16 +201,21 @@ function Calendar(props) {
                             {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day, index) => <div key={index} className="week">{day}</div>)}
                         </div>
                         <Grid container justify="center" className={classes.gridContainer}>
-                            {calendar.map((week, index) => <Grid container item justify="space-evenly" xs={12} key={index}>
-                                {week.map((day, index) => <Grid item xs key={index} onClick={() => handleClick(day)} className={classes.rightWeek}>
-                                    <Paper elevation={3} variant="outlined" className="weekDays">
-                                        <Typograpy className={`${"weekDays"} ${dayStyles(day, value)}`}>{isSingleDigit(day.format("MMM DD").toString()) ? `${'\u00A0'}${day.format("D").toString()}${'\u00A0'}` : day.format("MMM DD").toString()}</Typograpy>
-                                    </Paper>
-                                </Grid>)}
+                            {calendar.map((week, index1) => <Grid container item justify="space-evenly" xs={12} key={index1}>
+                                {week.map((day, index2) => {
+                                    return (<Grid item xs key={index2} onClick={() => handleClick(day, index1, index2)} className={classes.rightWeek}>
+                                        <Paper elevation={3} variant="outlined" className="weekDaysnew">
+                                            <Typograpy className={`${"weekDays"} ${dayStyles(day, value)}`}>{isSingleDigit(day.format("MMM DD").toString()) ? `${'\u00A0'}${day.format("D").toString()}${'\u00A0'}` : day.format("MMM DD").toString()}</Typograpy>
+                                            {
+                                                props.user.authenticated && <Typography variant="body2" color="textSecondary" style={{ padding: '0.5em 0.25em' }} >Schedule for {day.format("MMM DD").toString()}</Typography>
+                                            }
+                                        </Paper>
+                                    </Grid>)
+                                })}
                             </Grid>)}
                         </Grid>
                     </div>
-                    <Popup loading={loading} handleSubmit={handleSubmit} cardData={cardData} setCardData={setCardData} title={title} openPopup={openPopup} setOpenPopup={setOpenPopup} />
+                    <Popup isDay={isDay} loading={loading} handleSubmit={handleSubmit} cardData={cardData} setCardData={setCardData} title={title} openPopup={openPopup} setOpenPopup={setOpenPopup} />
                 </div>
             )
             }
@@ -214,7 +226,15 @@ function Calendar(props) {
 Calendar.propTypes = {
     classes: PropTypes.object.isRequired,
     side: PropTypes.bool.isRequired,
+    data: PropTypes.object.isRequired,
+    UI: PropTypes.object.isRequired,
+    user: PropTypes.object.isRequired,
 }
+const mapStateToProps = (state) => ({
+    data: state.data,
+    user: state.user,
+    UI: state.UI
+})
 
-export default withStyles(styles)(Calendar);
+export default connect(mapStateToProps, {})(withStyles(styles)(Calendar));
 
