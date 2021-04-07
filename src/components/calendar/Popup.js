@@ -37,21 +37,23 @@ function Popup(props) {
                     </IconButton></div>
             </DialogTitle>
             <DialogContent>
-                {/* <form onSubmit={(e) => handleSubmit(e)}>
-                    <TextField placeholder="Event Title" name="title" defaultValue="" autoFocus required onChange={(e) => handleChange(e)} fullWidth variant="standard"></TextField>
-                    <Grid container justify="center">
-                        <Grid item xs={12}>
-                            <TextField type="date" name="date" size="medium" defaultValue={cardData.date} disabled fullWidth variant="standard"></TextField>
-                            <TextField type="time" name="time" size="medium" defaultValue={cardData.time} onChange={(e) => handleChange(e)} autoFocus fullWidth variant="standard"></TextField>
-                            <TextField type="text" name="description" size="medium" placeholder="Add a little description about the event" onChange={(e) => handleChange(e)} fullWidth multiline rows={3} rowsMax={3} variant="standard"></TextField>
-                        </Grid>
-                    </Grid>
-                </form> */}
                 <Grid container spacing={1}>
-                    <Grid container justify="center" item xs={12}>
+                    <Grid container justify="center" item xs={12} sm={6}>
                         <Grid>{props.user.authenticated && props.UI.loading === false ? props.data.events[isDay] ? props.data.events[isDay].time.map((data, index) => {
                             return <Grid spacing={2} style={{ border: '1px solid' }} container item xs={12} key={index}><Grid item xs={4}>{time[index]}</Grid><Grid container style={{ border: '1px dotted' }} item xs={8}><Grid item xs={12}>{data.firstTask}</Grid><Grid item xs={12}>{data.secondTask}</Grid></Grid></Grid>
                         }) : null : null}</Grid>
+                    </Grid>
+                    <Grid container item xs={12} sm={6}>
+                        <form onSubmit={(e) => handleSubmit(e)}>
+                            <TextField placeholder="Event Title" name="title" defaultValue="" autoFocus required onChange={(e) => handleChange(e)} fullWidth variant="standard"></TextField>
+                            <Grid container justify="center">
+                                <Grid item xs={12}>
+                                    <TextField type="date" name="date" size="medium" defaultValue={cardData.date} disabled fullWidth variant="standard"></TextField>
+                                    <TextField type="time" name="time" size="medium" defaultValue={cardData.time} onChange={(e) => handleChange(e)} autoFocus fullWidth variant="standard"></TextField>
+                                    <TextField type="text" name="description" size="medium" placeholder="Add a little description about the event" onChange={(e) => handleChange(e)} fullWidth multiline rows={3} rowsMax={3} variant="standard"></TextField>
+                                </Grid>
+                            </Grid>
+                        </form>
                     </Grid>
                 </Grid>
                 <br></br>

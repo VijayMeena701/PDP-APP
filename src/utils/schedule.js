@@ -120,7 +120,7 @@ const sampleData = [
 		]
 	},
 	{
-		id: '2021-10-14 00:00:00',
+		id: '2021-04-05 00:00:00',
 		date: new Date().toISOString(),
 		time: [
 			{
@@ -150,7 +150,7 @@ const sampleData = [
 		]
 	},
 	{
-		id: '2021-10-15 00:00:00',
+		id: '2021-04-06 00:00:00',
 		date: new Date().toISOString(),
 		time: [
 			{
@@ -180,37 +180,49 @@ const sampleData = [
 		]
 	},
 	{
-		id: '2021-10-16 00:00:00',
+		id: '2021-04-07 00:00:00',
 		date: new Date().toISOString(),
 		time: [
 			{
+				time: '5 am - 8am',
+				timeofDay: 'Early Morning',
 				firstTask: 'Social',
 				secondTask: 'Physical'
 			},
 			{
+				time: '8am - 12pm',
+				timeofDay: 'Morning',
 				firstTask: 'Physical',
 				secondTask: 'Errands'
 			},
 			{
+				time: '12pm - 5pm',
+				timeofDay: 'AfterNoon',
 				firstTask: 'Chores',
 				secondTask: 'Physical'
 			},
 			{
+				time: '5pm - 8pm',
+				timeofDay: 'Evening',
 				firstTask: 'Social',
 				secondTask: 'Physical'
 			},
 			{
+				time: '8pm - 10pm',
+				timeofDay: 'Night',
 				firstTask: 'Spiritual',
 				secondTask: 'Physical'
 			},
 			{
+				time: '10pm - 12am',
+				timeofDay: 'Late Night',
 				firstTask: 'Errands',
 				secondTask: 'Physical'
 			}
 		]
 	},
 	{
-		id: '2021-10-17 00:00:00',
+		id: '2021-04-08 00:00:00',
 		date: new Date().toISOString(),
 		time: [
 			{
@@ -240,7 +252,7 @@ const sampleData = [
 		]
 	},
 	{
-		id: '2021-10-18 00:00:00',
+		id: '2021-04-09 00:00:00',
 		date: new Date().toISOString(),
 		time: [
 			{
@@ -270,7 +282,7 @@ const sampleData = [
 		]
 	},
 	{
-		id: '2021-10-19 00:00:00',
+		id: '2021-04-10 00:00:00',
 		date: new Date().toISOString(),
 		time: [
 			{
